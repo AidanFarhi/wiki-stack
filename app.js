@@ -8,6 +8,8 @@ const app = express()
 app.use(morgan('dev'))
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
+app.use('/wiki', require('./routes/wiki'))
+app.use('/user', require('./routes/user'))
 
 
 const PORT = 3000;
@@ -20,11 +22,6 @@ const init = async() => {
 }
 
 init()
-
-// db.authenticate().
-//     then(()=> {
-//         console.log('db connected')
-//     })
 
 app.get('/', async (req, res, next) => {
     try {
