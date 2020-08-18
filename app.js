@@ -1,6 +1,7 @@
 
 const express = require('express')
 const morgan = require('morgan')
+const layout = require('./views/layout')
 
 const app = express()
 app.use(morgan('dev'))
@@ -9,8 +10,8 @@ app.use(express.urlencoded({extended: true}))
 
 app.get('/', async (req, res, next) => {
     try {
-        
-        res.send('Hello World')
+        const test = layout('')
+        res.send(test)
     } catch(err) { next(err) }
 })
 
@@ -24,7 +25,7 @@ app.use((err, req, res, next) => {
     }
 })
 
-const PORT = 1337;
+const PORT = 3000;
 app.listen(PORT, ()=> {
     console.log(`App listening on port: ${PORT}`)
 })
