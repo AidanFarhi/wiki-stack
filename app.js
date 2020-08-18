@@ -25,8 +25,7 @@ init()
 
 app.get('/', async (req, res, next) => {
     try {
-        const test = layout('')
-        res.send(test)
+        res.redirect('/wiki')
     } catch(err) { next(err) }
 })
 

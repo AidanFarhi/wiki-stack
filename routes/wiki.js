@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const addPage = require('../views/addPage.js')
 
 const router = new Router()
 
@@ -7,11 +8,12 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    res.send('you just posted to wiki')
+    res.json(req.body)
 })
 
 router.get('/add', (req, res, next) => {
-    res.send('you just requested the add page form')
+    const page = addPage()
+    res.send(page)
 })
 
 module.exports = router
