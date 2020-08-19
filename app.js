@@ -14,8 +14,8 @@ app.use('/user', require('./routes/user'))
 
 const PORT = 3000;
 const init = async() => {
-    await models.User.sync()
-    await models.Page.sync()
+    await models.User.sync({force: true})
+    await models.Page.sync({force: true})
     app.listen(PORT, ()=> {
         console.log(`Server is listening on port ${PORT}`)
     })
