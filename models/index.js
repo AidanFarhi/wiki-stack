@@ -8,7 +8,7 @@ const Page = db.define('page', {
     content: {type: Sequilize.STRING, allowNull: false},
     status: {type: Sequilize.ENUM('open', 'closed')},
     tags: {type: Sequilize.ARRAY(Sequilize.TEXT)}
-}
+    }
 )
 
 Page.beforeValidate((page) => {
@@ -22,7 +22,7 @@ Page.findByTag = (tag => {
     return Page.findAll({
         where: {
             tags: {
-                [Sequilize.Op.overlap]: [tag]
+                [Sequilize.Op.contains]: [tag]
             }
         }
     })

@@ -31,7 +31,6 @@ app.get('/', async(req, res, next) => {
 })
 
 app.get('/users', async (req, res, next) => {
-    console.log('hit')
     try {
         res.redirect('/users')
     } catch(err) { next(err) }

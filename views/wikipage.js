@@ -6,7 +6,7 @@ module.exports = (page, author) => layout(html`
       <small> (<a href="/wiki/${page.slug}/similar">Similar</a>)</small>
   </h3>
   <p>${page.tags}</p>
-  <h4>by <a href="/${author.id}">${author.name}</a></h4>
+  <h4>by <a href="/users/${author.id}">${author.name}</a></h4>
   <hr/>
   <div class="page-body">${page.content}</div>
   <hr/>
