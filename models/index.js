@@ -7,13 +7,25 @@ const Page = db.define('page', {
     slug: {type: Sequilize.STRING, allowNull: false},
     content: {type: Sequilize.STRING, allowNull: false},
     status: {type: Sequilize.ENUM('open', 'closed')},
-},
-{
-    hooks: {
-        beforeValidate: (page) => {
-            page.slug = page.title.replace(/\s+/g, '_').replace(/\W/g, '')
-        } 
+    tags: {type: Sequilize.ARRAY(Sequilize.TEXT)}
+}
+)
+
+Page.beforeValidate((page) => {
+    if (!page.slug) {
+        page.slug = page.title.replace(/\s+/g, '_').replace(/\W/g, '')
+        page.tags = page.tags.replace(/\s+/g,'').split('#').slice(1)
     }
+})
+
+Page.findByTag = (tag => {
+    return Page.findAll({
+        where: {
+            tags: {
+                [Sequilize.Op.overlap]: [tag]
+            }
+        }
+    })
 })
 
 const User = db.define('user', {
@@ -22,5 +34,7 @@ const User = db.define('user', {
 })
 
 Page.belongsTo(User, { as: 'author' })
+
+User.hasMany(Page, {foreignKey: 'authorId'})
 
 module.exports = { db, Page, User }
