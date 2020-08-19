@@ -13,18 +13,8 @@ router.get('/', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-    // console.log(req.body)
-    // // STUDENT ASSIGNMENT:
-    // // add definitions for `title` and `content`
-    // const page = new Page({
-    //   title: req.body.title,
-    //   content: req.body.content,
-    // });
-    // // make sure we only redirect *after* our save is complete!
-    // // note: `.save` returns a promise.
     try {
-    const [user, wasCreated] = await User.findOrCreate(
-    { 
+    const [user, wasCreated] = await User.findOrCreate({ 
         where: { 
             name: req.body.name,
             email: req.body.email
@@ -49,7 +39,8 @@ router.get('/:slug', async (req, res, next) => {
                 slug: req.params.slug
             }
         })
-        res.send(wikiPage(page))
+        const author = await page.getAuthor()
+        res.send(wikiPage(page, author))
     } catch(err) { next(err) }
 });
 

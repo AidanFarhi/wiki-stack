@@ -16,8 +16,6 @@ const Page = db.define('page', {
     }
 })
 
-
-
 const User = db.define('user', {
     name: {type: Sequilize.STRING, allowNull: false},
     email: {type: Sequilize.STRING, allowNull: false, validate: { isEmail: true }}
