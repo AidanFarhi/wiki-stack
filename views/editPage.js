@@ -4,20 +4,30 @@ const layout = require("./layout");
 module.exports = (page, author) => layout(html`
   <h3>Edit a Page</h3>
   <hr>
-  <form method="POST" action="/wiki/${page.slug}">
+  <form method="POST" action="/wiki/${page.slug}/edit">
 
-    <div>PLACEHOLDER FOR AUTHOR NAME FIELD</div>
+    <h5>${author.name}</h5>
     
-    <div>PLACEHOLDER FOR AUTHOR EMAIL FIELD</div>
+    <h5>${author.email}</h5>
 
     <div class="form-group">
       <label for="title" class="col-sm-2 control-label">Page Title</label>
       <div class="col-sm-10">
-        <input name="title" type="text" class="form-control" value="${page.title}"/>
+        <input name="title" type="text" class="form-control" placeholder="${page.title}"/>
       </div>
+
+      <label for="tags" class="col-sm-2 control-label">Page Tags</label>
+      <div class="col-sm-10">
+        <input name="tags" type="text" class="form-control" placeholder="${page.tags.map(tg => `#${tg} `)}"/>
+      </div>
+
+      <label for="content" class="col-sm-2 control-label">Page Content</label>
+      <div class="col-sm-10">
+        <textarea name="content" type="text" class="form-control" placeholder="${page.content}"></textarea>
+      </div>
+
     </div>
 
-    <div>PLACEHOLDER FOR PAGE CONTENT TEXTAREA FIELD</div>
 
     <div class="form-group">
       <label for="content" class="col-sm-2 control-label">Status</label>

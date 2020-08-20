@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { Page, User } = require('../models')
-const { wikiPage, main, addPage } = require('../views')
+const { wikiPage, main, addPage} = require('../views');
+const editPage = require("../views/editPage");
 
 const router = new Router()
 
@@ -40,10 +41,6 @@ router.get('/search', async (req, res, next) => {
 })
 
 router.get('/:slug', async (req, res, next) => {
-    console.log('hit')
-    if (req.params.slug.startsWith('/wiki/wiki')) {
-        req.params.slug = req.params.slug.slice(4)
-    }
     try {
         const page = await Page.findOne({
             where: {
@@ -54,5 +51,32 @@ router.get('/:slug', async (req, res, next) => {
         res.send(wikiPage(page, author))
     } catch(err) { next(err) }
 });
+
+router.get('/:slug/edit', async (req, res, next) => {
+    try {
+        const page = await Page.findOne({
+            where: {
+                slug: req.params.slug
+            }
+        })
+        const author = await page.getAuthor()
+        res.send(editPage(page, author))
+    } catch(err) { next(err) }
+})
+
+router.post('/:slug/edit', async (req, res, next) => {
+    try {
+        await Page.update({
+            title: req.body.title,
+            tags: req.body.tags,
+            content: req.body.content,
+            status: req.body.status
+        },
+        {
+            where: {slug: req.params.slug}
+        })
+        res.redirect(`/wiki/${req.params.slug}`)
+    } catch(err) { next(err) }
+})
 
 module.exports = router
