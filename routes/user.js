@@ -13,12 +13,8 @@ router.get('/', async(req, res, next) => {
 
 router.get('/:userId', async(req, res, next) => {
     try {
-        const user = await User.findByPk(req.params.userId)
-        const pages = await Page.findAll({
-            where: {
-                authorId: req.params.userId
-            }
-        })
+        const user = await User.findByPk(req.params.userId, {include: Page})
+        const pages = user.pages
         res.send(userPages(user, pages))
     } catch(err) { next(err) }
 })

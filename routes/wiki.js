@@ -35,12 +35,15 @@ router.get('/add', (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         const pages = await Page.findByTag(req.query.search)
-        console.log(pages)
         res.send(main(pages))
     } catch(err) { next(err) }
 })
 
 router.get('/:slug', async (req, res, next) => {
+    console.log('hit')
+    if (req.params.slug.startsWith('/wiki/wiki')) {
+        req.params.slug = req.params.slug.slice(4)
+    }
     try {
         const page = await Page.findOne({
             where: {
@@ -51,25 +54,5 @@ router.get('/:slug', async (req, res, next) => {
         res.send(wikiPage(page, author))
     } catch(err) { next(err) }
 });
-
-// router.get('/users', async(req, res, next) => {
-    //     try {
-//         console.log('hit')
-//         const users = await User.findAll()
-//         res.send(userList(users))
-//     } catch(err) { next(err) }
-// })
-
-// router.get('/:userId', async(req, res, next) => {
-//     try {
-//         const user = await User.findByPk(req.params.userId)
-//         const pages = await Page.findAll({
-//             where: {
-//                 authorId: req.params.userId
-//             }
-//         })
-//         res.send(userPages(user, pages))
-//     } catch(err) { next(err) }
-// })
 
 module.exports = router
