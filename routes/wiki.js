@@ -79,4 +79,13 @@ router.post('/:slug/edit', async (req, res, next) => {
     } catch(err) { next(err) }
 })
 
+router.get('/:slug/similar', async (req, res, next) => {
+    try {
+        const page = await Page.findOne({where: {slug: req.params.slug}}) 
+        console.log(page)
+        const allPages = await Page.findByTag(page.tags)
+        res.send(main(allPages))
+    } catch(err) { next(err) }
+})
+
 module.exports = router
