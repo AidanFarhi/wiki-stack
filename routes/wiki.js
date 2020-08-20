@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { Page, User } = require('../models')
 const { wikiPage, main, addPage} = require('../views');
 const editPage = require("../views/editPage");
+const results = require('../views/results')
 
 const router = new Router()
 
@@ -36,7 +37,7 @@ router.get('/add', (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         const pages = await Page.findByTag(req.query.search)
-        res.send(main(pages))
+        res.send(results(pages))
     } catch(err) { next(err) }
 })
 
@@ -86,12 +87,18 @@ router.post('/:slug/edit', async (req, res, next) => {
     } catch(err) { next(err) }
 })
 
-router.get('/:slug/similar', async (req, res, next) => {
+router.get('/:slug/similar', async(req, res, next) => {
     try {
         const page = await Page.findOne({where: {slug: req.params.slug}}) 
         console.log(page)
         const allPages = await Page.findByTag(page.tags)
-        res.send(main(allPages))
+        res.send(results(allPages))
+    } catch(err) { next(err) }
+})
+
+router.get('/results', async(req, res, next) => {
+    try {
+        
     } catch(err) { next(err) }
 })
 

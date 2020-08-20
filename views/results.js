@@ -2,7 +2,7 @@ const html = require("html-template-tag");
 const layout = require("./layout");
 
 module.exports = (pages) => layout(html`
-  <h3>Pages</h3>
+  <h3>Results</h3>
   <hr>
   <form method="GET" action="/wiki/search">
     <input type="text" name="search" placeholder="Search for a tag"/>

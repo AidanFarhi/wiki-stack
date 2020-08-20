@@ -12,12 +12,11 @@ app.use(express.urlencoded({extended: true}))
 app.use('/wiki', require('./routes/wiki'))
 app.use('/users', require('./routes/user'))
 
-
 const PORT = 3000;
 const init = async() => {
-    await models.User.sync({force: true})
-    await models.Page.sync({force: true})
-    models.db.sync({force: true})
+    await models.User.sync()
+    await models.Page.sync()
+    models.db.sync()
     app.listen(PORT, ()=> {
         console.log(`Server is listening on port ${PORT}`)
     })

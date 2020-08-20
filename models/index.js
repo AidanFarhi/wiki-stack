@@ -19,10 +19,11 @@ Page.beforeValidate((page) => {
 })
 
 Page.findByTag = (tag => {
+    console.log(tag.split(' '))
     return Page.findAll({
         where: {
             tags: {
-                [Sequilize.Op.overlap]: [tag]
+                [Sequilize.Op.overlap]: tag.split(' ')
             }
         }
     })
