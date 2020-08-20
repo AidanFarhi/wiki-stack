@@ -64,6 +64,13 @@ router.get('/:slug/edit', async (req, res, next) => {
     } catch(err) { next(err) }
 })
 
+router.get('/:slug/delete', async (req, res, next) => {
+    try {
+        await Page.destroy({where: {slug: req.params.slug}})
+        res.redirect('/wiki')
+    } catch(err) { next(err) }
+})
+
 router.post('/:slug/edit', async (req, res, next) => {
     try {
         await Page.update({
