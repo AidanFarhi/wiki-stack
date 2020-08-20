@@ -90,8 +90,7 @@ router.post('/:slug/edit', async (req, res, next) => {
 router.get('/:slug/similar', async(req, res, next) => {
     try {
         const page = await Page.findOne({where: {slug: req.params.slug}}) 
-        console.log(page)
-        const allPages = await Page.findByTag(page.tags)
+        const allPages = await Page.findByTag(page.tags.join(' '))
         res.send(results(allPages))
     } catch(err) { next(err) }
 })

@@ -19,7 +19,6 @@ Page.beforeValidate((page) => {
 })
 
 Page.findByTag = (tag => {
-    console.log(tag.split(' '))
     return Page.findAll({
         where: {
             tags: {

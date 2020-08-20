@@ -11,7 +11,6 @@ module.exports = (pages) => layout(html`
   <hr>
   <ul class="list-unstyled">
     <ul>
-      ${pages.forEach(el => console.log(el.slug))}
       ${pages.map(el => `<a href='/wiki/${el.slug}'>${el.title}</a><br/>`)}
     </ul>
   </ul>`);
