@@ -67,13 +67,15 @@ router.get('/:slug/edit', async (req, res, next) => {
 
 router.get('/:slug/delete', async (req, res, next) => {
     try {
-        await Page.destroy({where: {slug: req.params.slug}})
+        const page = await Page.findOne({where: {slug: req.params.slug}})
+        await Page.destroy({where: {id: page.id}})
         res.redirect('/wiki')
     } catch(err) { next(err) }
 })
 
 router.post('/:slug/edit', async (req, res, next) => {
     try {
+        const page = await Page.findOne({where: {slug: req.params.slug}})
         await Page.update({
             title: req.body.title,
             tags: req.body.tags,
@@ -81,7 +83,7 @@ router.post('/:slug/edit', async (req, res, next) => {
             status: req.body.status
         },
         {
-            where: {slug: req.params.slug}
+            where: {id: page.id}
         })
         res.redirect(`/wiki/${req.params.slug}`)
     } catch(err) { next(err) }
@@ -92,12 +94,6 @@ router.get('/:slug/similar', async(req, res, next) => {
         const page = await Page.findOne({where: {slug: req.params.slug}}) 
         const allPages = await Page.findByTag(page.tags.join(' '))
         res.send(results(allPages))
-    } catch(err) { next(err) }
-})
-
-router.get('/results', async(req, res, next) => {
-    try {
-        
     } catch(err) { next(err) }
 })
 
