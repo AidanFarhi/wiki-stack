@@ -13,17 +13,17 @@ module.exports = (page, author) => layout(html`
     <div class="form-group">
       <label for="title" class="col-sm-2 control-label">Page Title</label>
       <div class="col-sm-10">
-        <input name="title" type="text" class="form-control" placeholder="${page.title}"/>
+        <input required name="title" type="text" class="form-control" placeholder="${page.title}"/>
       </div>
 
       <label for="tags" class="col-sm-2 control-label">Page Tags</label>
       <div class="col-sm-10">
-        <input name="tags" type="text" class="form-control" placeholder="${page.tags.map(tg => `#${tg} `)}"/>
+        <input required name="tags" type="text" class="form-control" placeholder="${page.tags.map(tg => `#${tg} `)}"/>
       </div>
 
       <label for="content" class="col-sm-2 control-label">Page Content</label>
       <div class="col-sm-10">
-        <textarea name="content" type="text" class="form-control" placeholder="${page.content}"></textarea>
+        <textarea required name="content" type="text" class="form-control" placeholder="${page.content}"></textarea>
       </div>
 
     </div>
