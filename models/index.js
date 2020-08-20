@@ -22,7 +22,7 @@ Page.findByTag = (tag => {
     return Page.findAll({
         where: {
             tags: {
-                [Sequilize.Op.contains]: [tag]
+                [Sequilize.Op.overlap]: [tag]
             }
         }
     })

@@ -35,6 +35,7 @@ router.get('/add', (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         const pages = await Page.findByTag(req.query.search)
+        console.log(pages)
         res.send(main(pages))
     } catch(err) { next(err) }
 })
@@ -46,7 +47,6 @@ router.get('/:slug', async (req, res, next) => {
                 slug: req.params.slug
             }
         })
-        console.log(page)
         const author = await page.getAuthor()
         res.send(wikiPage(page, author))
     } catch(err) { next(err) }
